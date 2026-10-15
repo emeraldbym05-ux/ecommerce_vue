@@ -2,6 +2,7 @@
   <v-app>
     <v-main>
       <router-view />
+      <span>Hello</span>
     </v-main>
   </v-app>
 </template>
