@@ -57,6 +57,7 @@
             item-value="cityName"
             v-model="township.cityDto"
             return-object
+            @update:model-value="changeCity()"
           ></v-combobox>
         </v-col>
         <v-col cols="12" md="12">
@@ -88,16 +89,20 @@ export default {
   }),
   props: {},
   mounted: function () {
-    this.tsListMethod();
+    //this.tsListMethod();
     this.cityListMethod();
   },
   methods: {
+    changeCity: function () {
+       this.tsListMethod();
+      //console.log(city);
+    },
     clickSave: function () {
       // if ("SAVE" == this.saveOrupdate) {
       townshipService
         .addTownship(this.township)
         .then(() => {
-          this.township = {};
+          this.township.townshipName = "";
           this.tsListMethod();
         })
         .catch(() => {
@@ -121,6 +126,7 @@ export default {
           this.cityList.splice(0);
           this.cityList.push(...response);
           this.township.cityDto = this.cityList[0];
+          this.tsListMethod();
         })
         .catch(() => {
           // this.$swal("Fail!", error.response.data.message, "error");
@@ -128,7 +134,7 @@ export default {
     },
     tsListMethod: function () {
       townshipService
-        .getTownship()
+        .getTownship(this.township.cityDto.cityId)
         .then((response) => {
           //console.log(response);
           this.tsList.splice(0);

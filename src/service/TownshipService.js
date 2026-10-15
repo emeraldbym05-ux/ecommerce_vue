@@ -6,9 +6,13 @@ class TownshipService {
     this.axios = axios;
   }
 
-  getTownship() {
+  getTownship(cityId) {
     let url = `/township`;
-    return axios.get(url).then((request) => request.data);
+    return axios.get(url,{
+      params:{
+        cityId
+      }
+    }).then((request) => request.data);
   }
 
   addTownship(township) {
