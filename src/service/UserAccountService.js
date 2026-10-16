@@ -11,10 +11,10 @@ class UserAccountService {
     return axios.get(url, { params: { type } }).then((request) => request.data);
   }
 
-  // addUserAccount(userAccount) {
-  //   let url = `/useraccount`;
-  //   return this.axios.post(url, userAccount).then((request) => request.data);
-  // }
+  addUserAccount(user) {
+    let url = `/useraccount`;
+    return this.axios.post(url, user).then((request) => request.data);
+  }
 
   // updateUserAccount(userAccount) {
   //   let url = `/useraccount/${userAccount.userAccountId}`;
