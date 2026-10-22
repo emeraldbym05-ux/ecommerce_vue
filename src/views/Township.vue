@@ -68,8 +68,23 @@
         </v-col>
         <v-col cols="12" md="12" class="text-right">
           <v-btn variant="tonal" @click="clickSave()">
-            {{ saveOrupdate }}
-          </v-btn>
+            {{ saveOrupdate }}</v-btn></v-col>
+            <v-col cols="12" md="12">
+      <v-dialog max-width="500" v-model="dialogDelete">
+        <v-card title="Dialog">
+          <v-card-text>
+            Are you sure to delete {{ deleteCity.townshipName }} ?</v-card-text>
+            <v-spacer></v-spacer>
+
+            <v-btn text="Cancel" @click="dialogDelete = false"></v-btn>
+            <v-btn
+              text="Delete"
+              @click="clickDeleteMethod()"
+              color="red"
+            ></v-btn>
+          
+          </v-card>
+          </v-dialog>
         </v-col>
       </v-row>
     </v-col>
@@ -94,7 +109,7 @@ export default {
   },
   methods: {
     changeCity: function () {
-       this.tsListMethod();
+      this.tsListMethod();
       //console.log(city);
     },
     clickSave: function () {
