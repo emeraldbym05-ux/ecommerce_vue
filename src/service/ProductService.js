@@ -11,20 +11,20 @@ class ProductService {
     return axios.get(url).then((request) => request.data);
   }
 
-  // addProduct(product) {
-  //   let url = `/product`;
-  //   return this.axios.post(url, product).then((request) => request.data);
-  // }
+  addProduct(product) {
+  let url = `/product`;
+  return this.axios.post(url, product).then((request) => request.data);
+  }
 
-  // updateProduct(product) {
-  //   let url = `/product/${product.productId}`;
-  //   return this.axios.put(url, product).then((request) => request.data);
-  // }
+  updateProduct(product) {
+  let url = `/product/${product.productId}`;
+  return this.axios.put(url, product).then((request) => request.data);
+  }
 
-  // deleteProduct(product) {
-  //   let url = `/product/${product.productId}`;
-  //   return this.axios.delete(url).then((request) => request.data);
-  // }
+   deleteProduct(product) {
+   let url = `/product/${product.productId}`;
+   return this.axios.delete(url).then((request) => request.data);
+   }
 }
 
 const service = new ProductService();

@@ -7,7 +7,9 @@
             <tr>
               <th class="text-center white--text bg-primary">No.</th>
               <!-- <th class="text-center white--text bg-primary">CityId</th> -->
-              <th class="text-center white--text bg-primary">Product Type Name</th>
+              <th class="text-center white--text bg-primary">
+                Product Type Name
+              </th>
               <th class="text-center white--text bg-primary">Action</th>
             </tr>
           </thead>
@@ -18,7 +20,9 @@
               @click="selectedOne = item"
               :style="{
                 backgroundColor:
-                  item.productTypeId == selectedOne.productTypeId ? '#def3ff' : 'transparent',
+                  item.productTypeId == selectedOne.productTypeId
+                    ? '#def3ff'
+                    : 'transparent',
               }"
             >
               <td class="text-center">{{ index + 1 }}</td>
@@ -99,7 +103,8 @@ export default {
   },
   methods: {
     producttypeListMethod: function () {
-      producttypeService.getProductType()
+      producttypeService
+        .getProductType()
         .then((response) => {
           this.producttypeList.splice(0);
           this.producttypeList.push(...response);

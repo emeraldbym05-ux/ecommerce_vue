@@ -68,22 +68,29 @@
         </v-col>
         <v-col cols="12" md="12" class="text-right">
           <v-btn variant="tonal" @click="clickSave()">
-            {{ saveOrupdate }}</v-btn></v-col>
-            <v-col cols="12" md="12">
-      <v-dialog max-width="500" v-model="dialogDelete">
-        <v-card title="Dialog">
-          <v-card-text>
-            Are you sure to delete {{ deleteCity.townshipName }} ?</v-card-text>
-            <v-spacer></v-spacer>
+            {{ saveOrupdate }}</v-btn
+          ></v-col
+        >
+        <v-col cols="12" md="12">
+          <v-dialog max-width="500" v-model="dialogDelete">
+            <v-card title="Dialog">
+              <v-card-text>
+                Are you sure to delete
+                {{ deletetownship?.townshipName ?? "" }}?
+              </v-card-text>
 
-            <v-btn text="Cancel" @click="dialogDelete = false"></v-btn>
-            <v-btn
-              text="Delete"
-              @click="clickDeleteMethod()"
-              color="red"
-            ></v-btn>
-          
-          </v-card>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn text="Cancel" @click="dialogDelete = false"></v-btn>
+
+                <v-btn
+                  text="Delete"
+                  @click="clickDeleteMethod()"
+                  color="red"
+                ></v-btn>
+              </v-card-actions>
+            </v-card>
           </v-dialog>
         </v-col>
       </v-row>
@@ -98,9 +105,10 @@ export default {
     selectedOne: {},
     tsList: [],
     cityList: [],
-
     township: { cityDto: {} },
     saveOrupdate: "SAVE",
+    deletetownship: {},
+    dialogDelete: false,
   }),
   props: {},
   mounted: function () {
@@ -108,31 +116,53 @@ export default {
     this.cityListMethod();
   },
   methods: {
-    changeCity: function () {
-      this.tsListMethod();
-      //console.log(city);
+    clickEdit(item) {
+      this.township = Object.assign({}, item);
+      this.saveOrupdate = "UPDATE";
     },
-    clickSave: function () {
-      // if ("SAVE" == this.saveOrupdate) {
+    clickDeleteMethod: function () {
+      this.dialogDelete = false;
       townshipService
-        .addTownship(this.township)
+        .deleteTownship(this.deletetownship)
         .then(() => {
-          this.township.townshipName = "";
+          //this.township = {},
           this.tsListMethod();
         })
         .catch(() => {
           // this.$swal("Fail!", error.response.data.message, "error");
         });
-      // } else {
-      //   cityService
-      //     .updateCity(this.city)
-      //     .then(() => {
-      //       this.cityListMethod();
-      //     })
-      //     .catch(() => {
-      //       // this.$swal("Fail!", error.response.data.message, "error");
-      //     });
-      // }
+    },
+    showDeleteDialog(item) {
+      this.deletetownship = Object.assign({}, item);
+      this.dialogDelete = true;
+    },
+    changeCity: function () {
+      this.tsListMethod();
+      //console.log(city);
+    },
+    clickSave: function () {
+      if ("SAVE" == this.saveOrupdate) {
+        townshipService
+          .addTownship(this.township)
+          .then(() => {
+            this.township.townshipName = "";
+            this.tsListMethod();
+          })
+          .catch(() => {
+            // this.$swal("Fail!", error.response.data.message, "error");
+          });
+      } else {
+        townshipService
+          .updateTownship(this.township)
+          .then(() => {
+            this.township.townshipName = "";
+            this.saveOrupdate = "SAVE";
+            this.tsListMethod();
+          })
+          .catch(() => {
+            // this.$swal("Fail!", error.response.data.message, "error");
+          });
+      }
     },
     cityListMethod: function () {
       cityService

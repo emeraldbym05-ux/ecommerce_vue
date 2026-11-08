@@ -16,16 +16,17 @@ class UserAccountService {
     return this.axios.post(url, user).then((request) => request.data);
   }
 
-  // updateUserAccount(userAccount) {
-  //   let url = `/useraccount/${userAccount.userAccountId}`;
-  //   return this.axios.put(url, userAccount).then((request) => request.data);
-  // }
-
-  // deleteUserAccount(userAccount) {
-  //   let url = `/useraccount/${userAccount.userAccountId}`;
-  //   return this.axios.delete(url).then((request) => request.data);
-  // }
+ updateUserAccount(user) {
+  let url = `/useraccount/${user.useraccountId}`;
+  return this.axios.put(url, user).then((request) => request.data);
 }
 
+deleteUserAccount(user) {
+  let url = `/useraccount/${user.useraccountId}`;
+  return this.axios.delete(url).then((request) => request.data);
+}
+
+}
 const service = new UserAccountService();
 export default service;
+
